@@ -27,4 +27,8 @@ class Signin extends CI_Controller {
         session_destroy();
         redirect('signin');
     }
+    
+    public function info() {
+        phpinfo();
+    }
 }
