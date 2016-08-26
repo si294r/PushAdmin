@@ -171,6 +171,25 @@
                     });
                 }
 
+                function readd_push(id)
+                {
+                    $.ajax({
+                        url: "<?php echo site_url($class . '/ajax_readd') ?>/" + id,
+                        type: "POST",
+                        dataType: "JSON",
+                        success: function (data)
+                        {
+                            //if success reload ajax table
+                            $('#modal_form').modal('hide');
+                            reload_table();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown)
+                        {
+                            alert('Error re-adding data');
+                        }
+                    });
+                }
+                
                 function delete_push(id)
                 {
                     if (confirm('Are you sure delete this data?'))

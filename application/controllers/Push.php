@@ -31,8 +31,9 @@ class Push extends CI_Controller {
             $row[] = isset($push['sent_date']) ? $push['sent_date'] : "";
 
             //add html for action
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void()" title="View" onclick="view_push(' . "'" . $push['_id'] . "'" . ')"><i class="glyphicon glyphicon-search"></i> View</a>
-                  <a class="btn btn-sm btn-danger" href="javascript:void()" title="Hapus" onclick="delete_push(' . "'" . $push['_id'] . "'" . ')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void()" title="View" onclick="view_push(' . "'" . $push['_id'] . "'" . ')"><i class="glyphicon glyphicon-search"></i> </a>
+                  <a class="btn btn-sm btn-info" href="javascript:void()" title="ReAdd" onclick="readd_push(' . "'" . $push['_id'] . "'" . ')"><i class="glyphicon glyphicon-retweet"></i> </a>
+                  <a class="btn btn-sm btn-danger" href="javascript:void()" title="Delete" onclick="delete_push(' . "'" . $push['_id'] . "'" . ')"><i class="glyphicon glyphicon-trash"></i> </a>';
 
             $data[] = $row;
         }
@@ -76,6 +77,20 @@ class Push extends CI_Controller {
 //        echo json_encode(array("status" => TRUE));
     }
 
+    public function ajax_readd($id) {
+        $ref_data = $this->push->get_by_id($id);
+        $data = array(
+            'apps_name' => $ref_data['apps_name'],
+            'device_token' => $ref_data['device_token'],
+            'message' => $ref_data['message'],
+            'message_date' => gmdate("Y-m-d H:i:s"),
+            'sent_status' => 0,
+            'sent_by' => defined('PUSH_SENT_BY') ? PUSH_SENT_BY : 'PUSH_SENT_BY'
+        );
+        $insert = $this->push->save($data);
+        echo json_encode(array("status" => TRUE));
+    }
+    
     public function ajax_delete($id) {
         $this->push->delete_by_id($id);
         echo json_encode(array("status" => TRUE));
