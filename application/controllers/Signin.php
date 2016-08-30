@@ -15,7 +15,7 @@ class Signin extends CI_Controller {
             $data = $this->admin->signin($_POST['username'], $_POST['password']);
             if (is_object($data) || is_array($data)) {
                 $roles = json_decode(isset($data['roles']) ? $data['roles'] : '[]');
-                if (in_array($roles, "PushAdmin") || $data['username'] == 'admin') {
+                if (in_array("PushAdmin", $roles) || $data['username'] == 'admin') {
                     $_SESSION['signin'] = $data;
                     redirect('apps');
                 } else {
