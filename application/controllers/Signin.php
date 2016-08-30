@@ -19,7 +19,7 @@ class Signin extends CI_Controller {
                     $_SESSION['signin'] = $data;
                     redirect('apps');
                 } else {
-                    $data['message'] = "Sign In Failed.";
+                    $data['message'] = "Unauthorized.";
                 }
             } else {
                 $data['message'] = "Sign In Failed.";
