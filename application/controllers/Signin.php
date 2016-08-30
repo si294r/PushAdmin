@@ -17,7 +17,7 @@ class Signin extends CI_Controller {
                 $roles = json_decode(isset($data['roles']) ? $data['roles'] : '[]');
                 if (in_array("PushAdmin", $roles) || $data['username'] == 'admin') {
                     $_SESSION['signin'] = $data;
-                    redirect('apps');
+                    redirect('');
                 } else {
                     $data['message'] = "Unauthorized.";
                 }
