@@ -14,8 +14,13 @@ class Signin extends CI_Controller {
         if (isset($_POST['username']) && isset($_POST['password'])) {
             $data = $this->admin->signin($_POST['username'], $_POST['password']);
             if (is_object($data) || is_array($data)) {
-                $_SESSION['signin'] = $data;    
-                redirect('apps');
+                $roles = json_decode(isset($data['roles']) ? $data['roles'] : '[]');
+                if (in_array($roles, "PushAdmin") || $data['username'] == 'admin') {
+                    $_SESSION['signin'] = $data;
+                    redirect('apps');
+                } else {
+                    $data['message'] = "Sign In Failed.";
+                }
             } else {
                 $data['message'] = "Sign In Failed.";
             }
@@ -27,8 +32,9 @@ class Signin extends CI_Controller {
         session_destroy();
         redirect('signin');
     }
-    
+
     public function info() {
         phpinfo();
     }
+
 }

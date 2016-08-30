@@ -11,7 +11,7 @@ class Admin_model extends CI_Model {
 
         $this->load->helper('mongodb');
            
-        $db = get_mongodb();
+        $db = get_mongodb_auth();
 
         $document = $db->admin->findOne([
             'username' => $username,

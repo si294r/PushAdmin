@@ -4,6 +4,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require '/var/www/vendor/autoload.php';
 
+// get mongodb auth object database
+function get_mongodb_auth() {
+
+    include '/var/www/mongodb_auth.php';
+
+    $database = $config['database'];
+
+    $connection_string = "mongodb://"
+            . $config['username'] . ":"
+            . $config['password'] . "@"
+            . $config['hostname'] . "/"
+            . $database;
+
+    $client = new MongoDB\Client($connection_string, $config['options']); // create object client 
+
+    return $client->$database; // select database
+}
 
 // get mongodb object database
 function get_mongodb($is_development = false) {
